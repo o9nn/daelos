@@ -1,0 +1,116 @@
+%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#1a1a2e', 'primaryTextColor': '#eee', 'primaryBorderColor': '#7C3AED', 'lineColor': '#7C3AED', 'secondaryColor': '#16213e', 'tertiaryColor': '#0f3460', 'background': '#0a0a0f', 'mainBkg': '#1a1a2e', 'nodeBorder': '#7C3AED', 'clusterBkg': '#16213e', 'clusterBorder': '#7C3AED', 'titleColor': '#fff', 'edgeLabelBackground': '#1a1a2e'}}}%%
+
+flowchart TB
+    subgraph USER["👤 USER INTERACTION LAYER"]
+        direction LR
+        UI[("🖥️ Desktop UI")]
+        DASH["📊 Cognitive Dashboard"]
+        CHAT["💬 Chat Interface"]
+    end
+
+    subgraph PRESENTATION["🎨 PRESENTATION LAYER (daelos)"]
+        direction LR
+        WM["🪟 Window Manager"]
+        TB["📌 Taskbar"]
+        FS["📁 File System"]
+        APPS["📱 Applications"]
+    end
+
+    subgraph COGNITIVE["🧠 COGNITIVE LAYER"]
+        direction TB
+        
+        subgraph ORCHESTRATOR["⚡ Daedalus Orchestrator"]
+            ORCH["Central Coordinator"]
+        end
+
+        subgraph AWARENESS["👁️ AWARENESS TRIAD"]
+            direction LR
+            ENT["🌟 Entelechy<br/>Self-Actualization"]
+            AUTO["🔮 Autognosis<br/>Self-Knowledge"]
+            RR["🎯 Relevance<br/>Realization"]
+        end
+
+        subgraph AGENCY["🎭 AGENCY TRIAD"]
+            direction LR
+            AN["🎪 Agent-Neuro<br/>Personality"]
+            ONTO["🧬 Ontogenesis<br/>Evolution"]
+            NPU["⚙️ NPU Driver<br/>Inference"]
+        end
+    end
+
+    subgraph INFERENCE["🔥 INFERENCE LAYER"]
+        direction LR
+        WEBLLM["🌐 WebLLM<br/>Local GPU"]
+        PROMPT["💭 Prompt API<br/>Browser AI"]
+        EXT["🔌 External<br/>APIs"]
+    end
+
+    subgraph PERSISTENCE["💾 PERSISTENCE LAYER"]
+        direction LR
+        IDB[("🗄️ IndexedDB")]
+        GGUF["📦 GGUF Models"]
+        KERNELS["🧬 Kernel Genomes"]
+    end
+
+    %% User to Presentation
+    UI --> WM
+    DASH --> ORCH
+    CHAT --> AN
+
+    %% Presentation to Cognitive
+    WM --> |"Window Focus"| RR
+    TB --> |"Process State"| ENT
+    FS --> |"Memory Access"| AUTO
+    APPS --> |"Tool Invocation"| NPU
+
+    %% Orchestrator connections
+    ORCH --> ENT
+    ORCH --> AUTO
+    ORCH --> RR
+    ORCH --> AN
+    ORCH --> ONTO
+    ORCH --> NPU
+
+    %% Awareness Triad interactions
+    ENT <--> |"Actualization<br/>Metrics"| AUTO
+    AUTO <--> |"Salience<br/>Landscape"| RR
+    RR <--> |"Progress<br/>Tracking"| ENT
+
+    %% Agency Triad interactions
+    AN <--> |"Behavioral<br/>Modes"| ONTO
+    ONTO <--> |"Kernel<br/>Requests"| NPU
+    NPU <--> |"Personality<br/>Inference"| AN
+
+    %% Cross-Triad interactions
+    ENT -.-> |"Growth Goals"| ONTO
+    AUTO -.-> |"Self-Model"| AN
+    RR -.-> |"Attention"| NPU
+    AN -.-> |"Emotional State"| ENT
+    ONTO -.-> |"Capabilities"| AUTO
+    NPU -.-> |"Relevance Scores"| RR
+
+    %% Cognitive to Inference
+    NPU --> WEBLLM
+    NPU --> PROMPT
+    NPU --> EXT
+
+    %% Cognitive to Persistence
+    AUTO --> IDB
+    ONTO --> KERNELS
+    NPU --> GGUF
+    ENT --> IDB
+
+    %% Styling
+    classDef userLayer fill:#7C3AED,stroke:#9F7AEA,stroke-width:2px,color:#fff
+    classDef presLayer fill:#3B82F6,stroke:#60A5FA,stroke-width:2px,color:#fff
+    classDef cogLayer fill:#10B981,stroke:#34D399,stroke-width:2px,color:#fff
+    classDef infLayer fill:#F59E0B,stroke:#FBBF24,stroke-width:2px,color:#fff
+    classDef persLayer fill:#EF4444,stroke:#F87171,stroke-width:2px,color:#fff
+    classDef orchNode fill:#EC4899,stroke:#F472B6,stroke-width:3px,color:#fff
+
+    class UI,DASH,CHAT userLayer
+    class WM,TB,FS,APPS presLayer
+    class ENT,AUTO,RR,AN,ONTO,NPU cogLayer
+    class ORCH orchNode
+    class WEBLLM,PROMPT,EXT infLayer
+    class IDB,GGUF,KERNELS persLayer
